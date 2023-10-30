@@ -25,6 +25,10 @@ function App() {
         />
       )}
       {emptyRows}
+      {game.guessesRemaining !== 0 ? null : <div>
+        <hr />
+          <Guess word={game.answer} score={Array(4).fill('C')}/>
+      </div>}
     </div>
   );
 }

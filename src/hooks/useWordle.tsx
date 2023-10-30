@@ -1,13 +1,13 @@
-import * as Wordle from "../wordle";
+import * as Wordle from "../utils/wordle/wordle";
 import { useState, useEffect, useCallback } from "react";
-import words from "../words";
+import words from "../constants/words";
 import { random } from "../utils/random";
 import { isLetter } from "../utils/isLetter";
 import { Game } from "../@types/types";
 
 export const useWordle = (): [Game, string, boolean] => {
   const [game, setGame] = useState<Game>(
-    Wordle.createGame(words, words[random()], true),
+    Wordle.createGame(words, words[random()], true)
   );
   const [guess, _setGuess] = useState("");
   const [valid, setValid] = useState(true);
@@ -16,11 +16,10 @@ export const useWordle = (): [Game, string, boolean] => {
     (guess: string) => {
       _setGuess(guess);
       setValid(
-        guess.length !== game.maxWordLength ||
-          Wordle.validateGuess(guess, game),
+        guess.length !== game.maxWordLength || Wordle.validateGuess(guess, game)
       );
     },
-    [game],
+    [game]
   );
 
   const handleKey = useCallback(
@@ -39,7 +38,7 @@ export const useWordle = (): [Game, string, boolean] => {
         setGuess(guess + char);
       }
     },
-    [game, guess, setGuess],
+    [game, guess, setGuess]
   );
 
   useEffect(() => {

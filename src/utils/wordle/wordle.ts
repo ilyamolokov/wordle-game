@@ -5,12 +5,12 @@ import {
   EMPTY,
   GuessScore,
   Game,
-} from "./@types/types";
+} from "../../@types/types";
 
 export const createGame = (
   dictionary: string[],
   answer: string,
-  hardMode = false,
+  hardMode = false
 ) => {
   return {
     answer,
@@ -41,7 +41,7 @@ export const scoreGuess = (guess: string, answer: string): GuessScore => {
     if (guessLetters[i] === EMPTY) continue;
 
     const answerIndex = answerLetters.findIndex(
-      (char) => char === guessLetters[i],
+      (char) => char === guessLetters[i]
     );
     if (answerIndex > -1) {
       score[i] = ALMOST;
