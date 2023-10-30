@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useWordle } from "./hooks/useWordle";
+import { Guess } from "./components/Guess/Guess";
 
 function App() {
+  const [game, guess, valid] = useWordle();
+
+  const emptyRows = Array(Math.max(0, game.guessesRemaining - 1))
+    .fill(0)
+    .map((_, index) => (
+      <Guess key={index} word={"".padStart(game.maxWordLength)} />
+    ));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {game.guesses.map((guess, index) => (
+        <Guess key={index} word={guess} score={game.scores[index]} />
+      ))}
+      {game.guessesRemaining > 0 && (
+        <Guess
+          key="guess"
+          active
+          valid={valid}
+          word={guess.padEnd(game.maxWordLength)}
+        />
+      )}
+      {emptyRows}
     </div>
   );
 }
